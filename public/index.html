@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VibeGamer — AI Game Prototyper</title>
+  <meta name="description" content="Describe a game, play it instantly. AI-powered browser game prototyping.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <h1>🎮 VibeGamer</h1>
+    <p class="tagline">Describe a game, play it instantly.</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Generate form -->
+  <div class="card">
+    <div class="card-row">
+      <div class="field">
+        <label for="model-select">Model</label>
+        <select id="model-select">
+          <option value="" disabled>Loading models…</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:14px;">
+      <label for="description">Describe your game</label>
+      <textarea id="description" rows="3"
+        placeholder="e.g. A platformer where a knight collects coins and avoids slimes…"
+        maxlength="500"></textarea>
+    </div>
+    <div style="margin-top:12px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <button id="generate-btn" class="btn btn-primary" onclick="generateGame()">
+        ▶ Generate Game
+      </button>
+      <div id="status"></div>
+    </div>
+  </div>
+
+  <!-- Game iframe -->
+  <div id="game-section">
+    <div class="game-wrapper">
+      <iframe
+        id="game-frame"
+        sandbox="allow-scripts"
+        title="Game"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- Refine + Share bar -->
+  <div id="action-bar">
+    <div class="field">
+      <label for="refine-model-select">Model for refinement</label>
+      <select id="refine-model-select"></select>
+    </div>
+    <div class="field" style="flex:2;">
+      <label for="refinement">Refine your game</label>
+      <input type="text" id="refinement"
+        placeholder="e.g. Add a score counter and make enemies faster"
+        maxlength="500">
+    </div>
+    <div style="display:flex; gap:8px; padding-bottom:1px;">
+      <button class="btn btn-primary" onclick="refineGame()">🔄 Refine</button>
+      <button class="btn btn-secondary" onclick="shareGame()">🔗 Share</button>
+    </div>
+  </div>
+
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "vibegamer",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "setup": "node scripts/buildAssetManifest.js && node scripts/createPlaceholderAssets.js && cp node_modules/kaplay/dist/kaplay.js public/engine/kaboom.js",
+    "build": "node scripts/buildAssetManifest.js",
+    "start": "node scripts/buildAssetManifest.js && node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@google/generative-ai": "^0.21.0",
+    "@hono/node-server": "^1.13.0",
+    "better-sqlite3": "^11.5.0",
+    "dotenv": "^16.4.5",
+    "hono": "^4.6.0",
+    "kaplay": "^3001.0.0",
+    "nanoid": "^5.0.7",
+    "openai": "^4.67.0",
+    "rate-limiter-flexible": "^5.0.3"
+  }
+}
