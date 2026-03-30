@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "setup": "node scripts/buildAssetManifest.js && node scripts/createPlaceholderAssets.js && cp node_modules/kaplay/dist/kaplay.js public/engine/kaboom.js",
+    "setup": "node scripts/createPlaceholderAssets.js && node scripts/buildAssetManifest.js && node scripts/copyEngine.js",
     "build": "node scripts/buildAssetManifest.js",
     "start": "node scripts/buildAssetManifest.js && node server/index.js",
     "dev": "node server/index.js"
