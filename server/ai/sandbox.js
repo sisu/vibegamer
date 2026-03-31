@@ -43,7 +43,16 @@ function makeProxy() {
   });
 }
 
+// Invoke fn if it is a function (passing any args), then return a Proxy.
+function call(fn, ...args) {
+  if (typeof fn === 'function') fn(...args);
+  return makeProxy();
+}
+
 function buildContext() {
+  const scenes = new Map();
+  let sceneDepth = 0;
+
   const ctx = {
     console, Math, JSON,
     Array, Object, String, Number, Boolean,
@@ -51,8 +60,48 @@ function buildContext() {
     Date, RegExp, Error, Map, Set, Promise,
     setTimeout: () => {}, clearTimeout: () => {},
     setInterval: () => {}, clearInterval: () => {},
+
+    // Scene management: store callbacks so go() can invoke them.
+    scene: (name, fn) => { if (typeof fn === 'function') scenes.set(name, fn); return makeProxy(); },
+    go: (name) => {
+      if (sceneDepth < 3) {
+        sceneDepth++;
+        const fn = scenes.get(name);
+        if (typeof fn === 'function') fn();
+        sceneDepth--;
+      }
+      return makeProxy();
+    },
+
+    // Global event handlers: invoke callbacks immediately so errors inside are caught.
+    onUpdate:        (fn)      => call(fn),
+    onFixedUpdate:   (fn)      => call(fn),
+    onDraw:          (fn)      => call(fn),
+    onLoad:          (fn)      => call(fn),
+    onAdd:           (fn)      => call(fn, makeProxy()),
+    onDestroy:       (fn)      => call(fn, makeProxy()),
+    onKeyDown:       (key, fn) => call(fn),
+    onKeyPress:      (key, fn) => call(fn),
+    onKeyPressRepeat:(key, fn) => call(fn),
+    onKeyRelease:    (key, fn) => call(fn),
+    onCharInput:     (fn)      => call(fn, ''),
+    // btn parameter is optional in kaplay: onMouseDown(fn) or onMouseDown("left", fn)
+    onMouseDown:    (btn, fn)  => typeof btn === 'function' ? call(btn) : call(fn),
+    onMousePress:   (btn, fn)  => typeof btn === 'function' ? call(btn) : call(fn),
+    onMouseRelease: (btn, fn)  => typeof btn === 'function' ? call(btn) : call(fn),
+    onMouseMove:    (fn)       => call(fn, makeProxy()),
+    onScroll:       (fn)       => call(fn, makeProxy()),
+    onTouchStart:   (fn)       => call(fn, makeProxy(), makeProxy()),
+    onTouchMove:    (fn)       => call(fn, makeProxy(), makeProxy()),
+    onTouchEnd:     (fn)       => call(fn, makeProxy(), makeProxy()),
+    wait:           (t, fn)    => call(fn),
+    loop:           (t, fn)    => call(fn),
   };
-  for (const name of KAPLAY_GLOBALS) ctx[name] = makeProxy();
+
+  for (const name of KAPLAY_GLOBALS) {
+    if (!(name in ctx)) ctx[name] = makeProxy();
+  }
+
   return vm.createContext(ctx);
 }
 
