@@ -1,7 +1,7 @@
 import vm from 'vm';
 
 const KAPLAY_GLOBALS = [
-  'kaboom','scene','go','add','make','readd','get','query','destroy','destroyAll',
+  'kaplay','scene','go','add','make','readd','get','query','destroy','destroyAll',
   'pos','scale','rotate','color','opacity','sprite','text','polygon','rect','circle','uvquad',
   'area','anchor','z','layer','outline','body','offscreen','follow',
   'health','lifespan','named','state','timer','fixed','stay','textInput','tile',

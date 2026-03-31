@@ -3,3 +3,4 @@ data/*.db
 .env
 public/assets/manifest.json
 public/engine/kaboom.js
+kenney_new_platformer/

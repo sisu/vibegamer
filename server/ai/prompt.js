@@ -1,6 +1,6 @@
-const KAPLAY_CHEATSHEET = `Kaplay Quick Reference (always call kaboom() first):
+const KAPLAY_CHEATSHEET = `Kaplay Quick Reference (always call kaplay() first):
 
-kaboom({ width: 800, height: 600, background: [0, 0, 0] });
+kaplay({ width: 800, height: 600, background: [0, 0, 0] });
 
 loadSprite("player", "/assets/sprites/player.png");
 loadSound("jump", "/assets/sounds/jump.wav");
@@ -51,7 +51,7 @@ Rules (strictly follow ALL of them):
 2. Do not use fetch(), XMLHttpRequest, import(), or eval().
 3. Do not reference any URL that does not start with /assets/ or /engine/.
 4. Do not access document.cookie, localStorage, sessionStorage, window.parent, or window.top.
-5. Always call kaboom() first to initialize the Kaplay engine.
+5. Always call kaplay() first to initialize the Kaplay engine.
 6. Only use assets from the manifest below. Do not invent asset paths.
 7. The game must be self-contained and start automatically (no user setup needed).
 8. If the request is not about making a game, output exactly: // INVALID REQUEST

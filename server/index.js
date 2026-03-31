@@ -23,6 +23,12 @@ app.route('/', sharesRouter);
 // Share page — serve share.html for all /s/:slug paths
 app.get('/s/:slug', (c) => c.html(shareHtml));
 
+// Allow null-origin sandboxed iframes to load assets
+app.use('/assets/*', (c, next) => {
+  c.res.headers.set('Access-Control-Allow-Origin', '*');
+  return next();
+});
+
 // Static files (served last so API routes take priority)
 app.use('/*', serveStatic({ root: './public' }));
 
