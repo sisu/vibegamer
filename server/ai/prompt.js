@@ -1,34 +1,74 @@
-const KAPLAY_CHEATSHEET = `Kaplay Quick Reference (always call kaplay() first):
+const KAPLAY_CHEATSHEET = `Kaplay API reference:
 
-kaplay({ width: 800, height: 600, background: [0, 0, 0] });
+// Init — always first
+kaplay({ width: 800, height: 600, background: [20, 20, 20] });
 
-loadSprite("player", "/assets/sprites/player.png");
+// Load assets — call before scene()
+loadSprite("player", "/assets/kenney-platformer/characters/character_beige_idle.png");
 loadSound("jump", "/assets/sounds/jump.wav");
 
-scene("main", () => {
-  const player = add([ sprite("player"), pos(80, 80), area(), body() ]);
-  add([ rect(800, 16), pos(0, 560), area(), body({ isStatic: true }), color(0, 180, 0) ]);
+// Scenes
+scene("main", () => { /* all game code goes here */ });
+go("main");
 
-  onKeyDown("left",  () => player.move(-160, 0));
-  onKeyDown("right", () => player.move(160,  0));
-  onKeyPress("space", () => { if (player.isGrounded()) player.jump(400); });
+// Objects — add() returns an object with methods from its components
+const player = add([
+  sprite("player"),           // or rect(w, h) or circle(r) or text("hi", { size: 24 })
+  pos(100, 200),
+  scale(1),
+  color(255, 255, 255),       // r,g,b 0-255; tints the sprite
+  anchor("center"),           // "topleft"|"center"|"botleft"|"bot" etc.
+  area(),                     // required for collision
+  body(),                     // gravity + jump; requires area()
+  fixed(),                    // don't scroll with camera
+  z(0),                       // draw order
+  "player",                   // string tag — used for collision filtering and get()
+]);
 
-  // Collectible example:
-  add([ sprite("coin"), pos(200, 480), area(), "coin" ]);
-  player.onCollide("coin", (c) => { destroy(c); });
+// Object methods — only valid if object has the matching component
+player.move(dx, dy);          // velocity in px/s — NOT moveBy() or translate()
+player.moveTo(x, y);
+player.pos = vec2(x, y);      // teleport
+player.jump(600);             // requires body()
+player.isGrounded();          // requires body(); returns bool
+player.onCollide("enemy", (other) => { destroy(other); }); // requires area()
+player.onUpdate(() => {});
+player.destroy();
+player.use(sprite("other"));  // swap component
 
-  // Score label:
-  const scoreLabel = add([ text("0", { size: 24 }), pos(12, 12), fixed(), color(255, 255, 255) ]);
-  let score = 0;
-  // To update: scoreLabel.text = String(++score);
+// Input
+onKeyDown("left", () => {});        // held every frame; keys: "left" "right" "up" "down" "space" "a"-"z"
+onKeyPress("space", () => {});      // fired once on press
+onKeyRelease("space", () => {});
+isKeyDown("right");                 // bool; call inside onUpdate
+onMousePress((pos) => {});          // or onMousePress("left", (pos) => {})
+onMouseMove((pos) => {});
+mousePos();                         // returns vec2
+onTouchStart((pos, touch) => {});   // mobile
+onTouchEnd((pos, touch) => {});     // mobile
 
-  // Mobile touch controls (use instead of keyboard):
-  // const leftBtn = add([ rect(80, 80), pos(20, height() - 100), area(), opacity(0.5), fixed() ]);
-  // leftBtn.onTouchStart(() => { /* start moving left */ });
-  // leftBtn.onTouchEnd(() => { /* stop */ });
-});
+// Game loop & timers
+onUpdate(() => { const spd = 200 * dt(); });   // dt() = delta time in seconds
+onDraw(() => { /* immediate-mode draw calls */ });
+wait(1.5, () => {});   // one-shot callback after seconds
+loop(1,   () => {});   // repeated callback every second
 
-go("main");`;
+// Utilities
+dt(); time();                       // delta time, total elapsed seconds
+width(); height(); center();        // canvas dimensions
+vec2(x, y);
+rand(lo, hi); randi(lo, hi);        // random float / int
+choose([a, b, c]);
+lerp(a, b, t);
+
+// Camera & audio
+camPos(x, y);   // set camera; camPos() to read
+shake(8);
+play("jump");   // returns sound handle; handle.stop() to stop
+
+// Query
+get("tag");     // returns array of all live objects with that tag`;
+
 
 export function buildSystemPrompt(platform, assetManifest) {
   const platformInstructions = platform === 'mobile'
