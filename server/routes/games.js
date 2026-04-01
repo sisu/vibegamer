@@ -27,11 +27,12 @@ router.get('/api/models', (c) => {
   return c.json({ models });
 });
 
-// Get game metadata (used when loading a forked game)
+// Get game metadata
 router.get('/api/games/:id', (c) => {
   const game = getGame(c.req.param('id'));
   if (!game) return c.json({ error: 'Not found' }, 404);
-  return c.json({ id: game.id, platform: game.platform, model: game.model });
+  const prompts = JSON.parse(game.prompts).filter(p => p.role === 'user');
+  return c.json({ id: game.id, platform: game.platform, model: game.model, prompts });
 });
 
 // Generate a new game

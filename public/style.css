@@ -144,12 +144,6 @@ textarea {
 .card-row .field { flex: 1; min-width: 180px; }
 
 /* ── Game iframe ── */
-#game-section {
-  display: none;
-  margin-bottom: 20px;
-}
-
-#game-section.visible { display: block; }
 
 .game-wrapper {
   position: relative;
@@ -196,7 +190,38 @@ textarea {
 .status-success { color: var(--success) !important; }
 .status-error   { color: var(--danger)  !important; }
 
-/* ── Share page specifics ── */
+/* ── Foldable sections (details/summary) ── */
+.foldable {
+  margin-bottom: 16px;
+}
+
+.foldable > summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 0;
+  user-select: none;
+}
+
+.foldable > summary::-webkit-details-marker { display: none; }
+
+.foldable > summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 0.7em;
+  transition: transform 0.15s;
+}
+
+.foldable[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* ── Prompt list ── */
 .prompt-list {
   list-style: none;
   margin: 0;

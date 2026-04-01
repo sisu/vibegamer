@@ -5,6 +5,13 @@ import { buildFrameHtml, FRAME_HEADERS } from '../frame.js';
 
 const router = new Hono();
 
+// Redirect share links to the game page with share defaults
+router.get('/s/:slug', (c) => {
+  const share = getShare(c.req.param('slug'));
+  if (!share) return c.text('Not found', 404);
+  return c.redirect(`/game/${share.gameId}?share`, 302);
+});
+
 // Create a share snapshot for a game
 router.post('/api/games/:id/share', (c) => {
   const game = getGame(c.req.param('id'));

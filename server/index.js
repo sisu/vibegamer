@@ -10,7 +10,7 @@ import gamesRouter from './routes/games.js';
 import sharesRouter from './routes/shares.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const shareHtml = readFileSync(join(__dirname, '../public/share.html'), 'utf-8');
+const gameHtml = readFileSync(join(__dirname, '../public/game.html'), 'utf-8');
 
 const app = new Hono();
 
@@ -20,8 +20,8 @@ app.use('*', logger());
 app.route('/', gamesRouter);
 app.route('/', sharesRouter);
 
-// Share page — serve share.html for all /s/:slug paths
-app.get('/s/:slug', (c) => c.html(shareHtml));
+// Game page
+app.get('/game/:id', (c) => c.html(gameHtml));
 
 // Allow null-origin sandboxed iframes to load assets
 app.use('/assets/*', (c, next) => {
