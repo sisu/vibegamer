@@ -53,6 +53,9 @@ onDraw(() => { /* immediate-mode draw calls */ });
 wait(1.5, () => {});   // one-shot callback after seconds
 loop(1,   () => {});   // repeated callback every second
 
+// Physics
+setGravity(100);
+
 // Utilities
 dt(); time();                       // delta time, total elapsed seconds
 width(); height(); center();        // canvas dimensions

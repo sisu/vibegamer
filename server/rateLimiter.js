@@ -1,7 +1,7 @@
 import { RateLimiterMemory } from 'rate-limiter-flexible';
 
 const limiter = new RateLimiterMemory({
-  points: parseInt(process.env.RATE_LIMIT_POINTS ?? '5'),
+  points: parseInt(process.env.RATE_LIMIT_POINTS ?? '50'),
   duration: parseInt(process.env.RATE_LIMIT_DURATION ?? '3600'),
 });
 
