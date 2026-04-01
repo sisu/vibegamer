@@ -169,14 +169,9 @@ textarea {
 /* ── Refine / share bar ── */
 #action-bar {
   display: none;
-  gap: 12px;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
 }
 
-#action-bar.visible { display: flex; }
-#action-bar .field { flex: 1; min-width: 220px; }
+#action-bar.visible { display: block; }
 
 /* ── Status messages ── */
 #status {

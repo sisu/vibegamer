@@ -29,24 +29,25 @@
     </div>
   </details>
 
-  <div id="action-bar">
-    <div class="field">
-      <label for="refine-model-select">Model</label>
-      <select id="refine-model-select"></select>
+  <div id="action-bar" class="card">
+    <div class="card-row">
+      <div class="field">
+        <label for="refine-model-select">Model</label>
+        <select id="refine-model-select"></select>
+      </div>
     </div>
-    <div class="field" style="flex:2;">
+    <div style="margin-top:14px;">
       <label for="refinement">Refine your game</label>
-      <input type="text" id="refinement"
+      <textarea id="refinement" rows="3"
         placeholder="e.g. Add a score counter and make enemies faster"
-        maxlength="500">
+        maxlength="500"></textarea>
     </div>
-    <div style="display:flex; gap:8px; padding-bottom:1px;">
+    <div style="margin-top:12px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
       <button class="btn btn-primary" id="refine-btn" onclick="refineGame()">🔄 Refine</button>
       <button class="btn btn-secondary" onclick="shareGame()">🔗 Share</button>
+      <div id="status"></div>
     </div>
   </div>
-
-  <div id="status"></div>
 
 </main>
 
