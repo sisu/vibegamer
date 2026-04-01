@@ -103,7 +103,7 @@ async function shareGame() {
   } catch (err) {
     return setStatus(err.message, 'error');
   }
-  await navigator.clipboard.writeText(data.url).catch(() => {});
+  await navigator.clipboard?.writeText(data.url).catch(() => {});
   setStatus(`Share link copied: ${data.url}`, 'success');
 }
 
