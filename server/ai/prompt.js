@@ -40,7 +40,7 @@ onKeyDown("left", () => {});        // held every frame; keys: "left" "right" "u
 onKeyPress("space", () => {});      // fired once on press
 onKeyRelease("space", () => {});
 isKeyDown("right");                 // bool; call inside onUpdate
-onMousePress((pos) => {});          // or onMousePress("left", (pos) => {})
+onMousePress(() => {});          // or onMousePress("left", () => {})
 onMouseMove((pos) => {});
 mousePos();                         // returns vec2
 onTouchStart((pos, touch) => {});   // mobile
