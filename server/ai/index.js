@@ -8,13 +8,14 @@ import * as google    from './adapters/google.js';
 import * as ollama    from './adapters/ollama.js';
 
 const ADAPTERS = { anthropic, openai, google, ollama };
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 5;
 
 async function runWithSandboxRetry({ adapter, model, systemPrompt, messages }) {
   let msgs = [...messages];
   let code;
 
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    console.log(`Attempt ${attempt}`);
     code = await adapter.complete({ model, systemPrompt, messages: msgs });
     const result = sandboxTest(code);
     if (result.valid) break;

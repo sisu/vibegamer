@@ -103,10 +103,6 @@ function buildContext() {
     onTouchEnd:     (fn)       => call(fn, makeProxy(), makeProxy()),
     wait:           (t, fn)    => call(fn),
     loop:           (t, fn)    => call(fn),
-
-    // Special cases to avoid valid code failing
-    rand: () => 0,
-    dt: () => 0,
   };
 
   for (const name of KAPLAY_GLOBALS) {
