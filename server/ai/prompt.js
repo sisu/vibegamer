@@ -5,7 +5,6 @@ kaplay({ width: 800, height: 600, background: [20, 20, 20] });
 
 // Load assets — call before scene()
 loadSprite("player", "/assets/kenney-platformer/characters/character_beige_idle.png");
-loadSound("jump", "/assets/sounds/jump.wav");
 
 // Scenes
 scene("main", () => { /* all game code goes here */ });
@@ -64,10 +63,9 @@ rand(lo, hi); randi(lo, hi);        // random float / int
 choose([a, b, c]);
 lerp(a, b, t);
 
-// Camera & audio
+// Camera
 camPos(x, y);   // set camera; camPos() to read
 shake(8);
-play("jump");   // returns sound handle; handle.stop() to stop
 
 // Query
 get("tag");     // returns array of all live objects with that tag`;
