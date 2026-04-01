@@ -163,7 +163,7 @@ textarea {
 
 /* On mobile keep the iframe tall */
 @media (max-width: 480px) {
-  #game-frame { aspect-ratio: 9 / 16; }
+  #game-frame { aspect-ratio: 390 / 844; }
 }
 
 /* ── Refine / share bar ── */
