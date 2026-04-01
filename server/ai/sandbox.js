@@ -37,7 +37,14 @@ const KAPLAY_GLOBALS = [
 // Target must be a function so that apply/construct traps are valid in V8.
 function makeProxy() {
   return new Proxy(function () {}, {
-    get:       () => makeProxy(),
+    get: (_, key) => {
+      // Return primitives for coercion keys so comparisons like
+      // `obj.pos.y > 650` don't throw "Cannot convert object to primitive".
+      if (key === Symbol.toPrimitive) return (hint) => hint === 'string' ? '' : 0;
+      if (key === 'valueOf')  return () => 0;
+      if (key === 'toString') return () => '';
+      return makeProxy();
+    },
     apply:     () => makeProxy(),
     construct: () => makeProxy(),
   });
@@ -96,6 +103,10 @@ function buildContext() {
     onTouchEnd:     (fn)       => call(fn, makeProxy(), makeProxy()),
     wait:           (t, fn)    => call(fn),
     loop:           (t, fn)    => call(fn),
+
+    // Special cases to avoid valid code failing
+    rand: () => 0,
+    dt: () => 0,
   };
 
   for (const name of KAPLAY_GLOBALS) {
@@ -117,6 +128,7 @@ export function sandboxTest(code) {
     script.runInContext(buildContext(), { timeout: 500 }); // execution check
     return { valid: true };
   } catch (err) {
+    console.log(err.stack);
     return { valid: false, error: err.message.split('\n')[0] };
   }
 }
