@@ -51,7 +51,7 @@ function playGame() {
   const slug = window.location.pathname.split('/').pop();
   const section = document.getElementById('game-section');
   document.getElementById('game-frame').src = `/api/share/${slug}/frame`;
-  section.classList.remove('hidden');
+  section.classList.add('visible');
   document.getElementById('play-btn').disabled = true;
   section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
